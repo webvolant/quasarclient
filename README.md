@@ -1,6 +1,6 @@
 # Quasar App (qclient)
 
-quasar desc
+quasar framework frontend
 
 ## Install the dependencies
 ```bash
