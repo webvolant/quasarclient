@@ -10,6 +10,7 @@
           </audio>
           <q-slider v-model="currentSeconds" :min="0" :max="durationSeconds" @change="seek"/>
         </div>
+        <!-- если есть начатый прослушанный то просто из сесси подгружаем его в окне дополнительном внизу -->
 
       </div>
 
@@ -77,6 +78,9 @@
 				],*/
 			}
 		},
+    watch:{
+
+    },
 		mounted(){
 
 		},
@@ -91,6 +95,10 @@
 					this.$refs.audio.addEventListener('ended', () => { this.next(); this.playing = true; })
 				})
 		},
+    //oncanplay
+    //currentTime
+
+
 		/*computed: {
 
 			percentComplete() {
@@ -133,7 +141,12 @@
       },
 			update(e) {
 				//console.log(this.$refs.audio.currentTime)
-				this.currentSeconds = parseInt(this.$refs.audio.currentTime);
+        //localStorage.setItem('currentTime', this.$refs.audio.currentTime)
+				this.currentSeconds = parseInt(this.$refs.audio.currentTime)
+				//this.currentSeconds = parseInt(localStorage.getItem('currentTime'))
+				//current position
+        //current teil
+        //current book
 			},
 			seek(e) {
 				/*if (!this.playing) {

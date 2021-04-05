@@ -1,7 +1,10 @@
 <template>
   <q-page class="">
     <div class="q-pa-md"> <!-- style="display: none;" preload="auto" -->
-      <audio-player :files="files" v-if="files.length>0"></audio-player>
+      <audio-player :files="files" v-if="files.length>0 && item.status==1"></audio-player>
+      <div color="primary" v-if="item.status == 3">
+        Приносим свои извинения. Доступ к файлам временно закрыт!
+      </div>
     </div>
   </q-page>
 </template>
@@ -13,6 +16,7 @@
 		components: { AudioPlayer },
 		data () {
 			return {
+			  item:{},
 				files:[
 					///{path:'audio/patrul-0.mp3', name:'Щенки спасают лес'},
 					//{path:'audio/patrul-1.mp3', name:'Щенки спасают театр'},
@@ -28,10 +32,11 @@
 		methods: {
 			getItem: function () {
 				const that = this;
-				this.$axios.get(this.globalConstants.apiUrl + 'items/' + this.$route.params.id).then((response) => {
+				this.$axios.get(this.globalConstants.apiUrl + 'item/' + this.$route.params.id).then((response) => {
 					//console.log(response.data)
 					that.item = response.data.item
-					that.item.files.forEach(function (value, index) {
+          if(that.item.files)
+          that.item.files.forEach(function (value, index) {
 						if(value.type==1){
 							value.path = that.globalConstants.imageUrl + value.path
 							that.files.push(value)
@@ -55,6 +60,10 @@
 				})
 				.catch((error) => {
 					console.log(error)
+          this.$q.notify({
+            type: 'negative',
+            message: error.message
+          })
 					//this.$q.notify({color: 'negative',position: 'top',message: 'Loading failed',icon: 'report_problem'})
 				})
 

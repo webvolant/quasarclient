@@ -8,7 +8,7 @@ const routes = [
             //{ name: 'books_index', path: '', component: () => import('pages/Login.vue') },
         ]
     },
-    /*{
+    {
         path: '/login',
         component: () => import('layouts/MainLayout.vue'),
         //component: () => import('pages/Items.vue'),
@@ -16,7 +16,7 @@ const routes = [
             { path: '', component: () => import('pages/Login.vue') },
             { name: 'logincallback', path: '/login/callback', component: () => import('pages/Login.vue') }
         ]
-    },*/
+    },
     /*{
         path: '/item/:id',
         name: 'item',

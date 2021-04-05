@@ -26,9 +26,9 @@
       content-class="bg-grey-1"
     >
       <q-list>
-        <q-item-label header class="text-grey-8">Меню</q-item-label>
+        <q-item-label header class="text-grey-8">Меню , query: { time: Date.now() }</q-item-label>
         <q-item clickable v-ripple><q-item-section><router-link :to="{name: 'items', params: { } }">Все аудиосказки</router-link></q-item-section></q-item>
-        <q-item clickable v-ripple><q-item-section><router-link :to="{name: 'item', params: { id: 'new' }, query: { time: Date.now() } }">Добавить новую книгу</router-link></q-item-section></q-item>
+        <q-item clickable v-ripple><q-item-section><router-link :to="{name: 'item', params: { id: 'new' } }">Добавить новую книгу</router-link></q-item-section></q-item>
 
         <q-item clickable v-ripple><q-item-section><router-link :to="{name: 'books', params: { } }">Каталог</router-link></q-item-section></q-item>
         <EssentialLink

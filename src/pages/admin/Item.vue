@@ -1,11 +1,11 @@
 <template>
   <q-page class="">
     <div class="q-pa-md">
-      <q-form @submit="onSubmit" class="q-gutter-md">
-        <q-input filled dense v-model="item.title" label="Название" hint="" lazy-rules :rules="[ val => val && val.length > 0 || 'Please type something']"/>
-        <q-input filled dense v-model="item.slug" label="Ссылка" hint=""/>
-        <q-input v-model="item.description" filled type="textarea" label="Текст описания"/>
-
+      <q-form class="q-gutter-md" ref="form">
+        <q-input filled dense v-model="item.title" label="Название" hint="" lazy-rules :rules="[ val => val && val.length > 0 || 'Обязательное поле']"/>
+        <q-input filled dense v-model="item.slug" label="Ссылка" hint="" lazy-rules :rules="[ val => val && val.length > 0 || 'Обязательное поле']"/>
+        <q-input filled dense v-model="item.description" type="textarea" label="Текст описания"/>
+        <q-select filled dense v-model="item.status" :options="status" label="Статус" emit-value map-options/>
         <!--//todo: 1. связанные с этим сказки , сезоны серии
             // 2. добавить порядок для файлов -->
 
@@ -28,11 +28,7 @@
 
           </q-item>
         </q-list>
-        <q-uploader style="width: 98%"
-          label="Файлы"
-          multiple
-          ref="files"
-        >
+        <q-uploader filled dense style="width: 98%" label="Файлы" multiple ref="files">
           <template v-slot:list="scope">
             <q-list separator>
 
@@ -97,7 +93,8 @@
         />
 
         <div>
-          <q-btn label="Сохранить" type="submit" color="primary"/>
+          <q-btn :loading="loading1" label="Сохранить" @click="onSubmit()" color="primary"/>
+          <q-btn :loading="loading1" label="Сохранить и выйти" @click="onSubmit(true)" color="primary"/>
           <q-btn label="Testing post" type="button" color="primary" @click="testing()"/>
         </div>
       </q-form>
@@ -125,14 +122,36 @@
 		//name: 'PageItem',
 		data () {
 			return {
-				item:{},
-        tags:{
-	        type: Array,
+        loading1: false,
+				item:{
+				  status: 1,
+          description: '',
+          title: '',
+          slug: '',
+          files: [],
         },
+        /*tags:{
+	        type: Array,
+        },*/
+        tags:[],
 				addons:{
 					type: Array,
 					//default: null
 				},
+        status:[
+          {
+            label: 'Opened',
+            value: 1,
+          },
+          {
+            label: 'Closed',
+            value: 2,
+          },
+          {
+            label: 'Closed only files',
+            value: 3,
+          },
+        ],
 				//files:[],
 				editing: false,
 				/*title: 'title1',
@@ -141,59 +160,33 @@
 			}
 		},
 		watch: {
-        '$route.params.id': function (id) {
-          console.log('id changed')
-	        this.$router.go()
-        	//this.$forceUpdate()
-        },
 				'item.title'(newVal, oldVal){ if(this.$route.params.id === 'new') { console.log('changed title'); this.item.slug = this.convertStrToSlug(this.item.title) } },
 		},
 		mounted(){
-
-			console.log('ehllo ! items')
-			console.log(this.$route.params.id)
-			//if ("id" in this.$route.params) {
+      console.log('mounted')
 			if (this.$route.params.id !== undefined && this.$route.params.id !== 'new') {
 				this.getItem();
 				this.editing = true;
 			} else {
 				this.editing = false
-				//this.item = {}
-				//this.addons = []
-				//this.tags = []
-				//console.log("ups");
 			}
 		},
 		methods: {
 			testing: function(){
-				console.log('testing start');
-				let fd = new FormData();
-				fd.append('name', "name test !")
-
-				this.$axios.post(this.globalConstants.apiUrl + 'checkingpost', fd).then((response) => {
-					console.log(response)
-					//this.item = response.data
-				})
-				.catch(() => {
-					this.$q.notify({color: 'negative',position: 'top',message: 'Loading failed',icon: 'report_problem'})
-				})
+        this.$router.push({name:'item', params:{id: 'patrol'} })
 			},
 			removeFile: function(file){
-				console.log('remove file');
-				console.log(file);
 				let fd = new FormData();
 				fd.append('name', file.name)
 				fd.append('size', file.size)
 
 				this.$axios.post(this.globalConstants.apiUrl + 'item/file/remove', fd).then((response) => {
-					console.log(response)
-					//this.item = response.data
+					//console.log(response)
 				})
 				.catch(() => {
 					this.$q.notify({color: 'negative',position: 'top',message: 'Loading failed',icon: 'report_problem'})
 				})
       },
-			//convertStrToSlug(Text){ return Text.toString().toLowerCase().replace(/ /g,'-').replace(/[^\w-]+/g,'') },
 			convertStrToSlug(text){
 				text = text.toString().toLowerCase().trim();
 
@@ -271,9 +264,9 @@
           //this.check_if_document_upload=true
       },*/
 			getItem: function () {
-				const that = this;
-
-				this.$axios.get(this.globalConstants.apiUrl + 'items/'+this.$route.params.id).then((response) => {
+				const that = this
+        let id = this.$route.params.id
+				this.$axios.get(this.globalConstants.apiUrl + 'items/'+id).then((response) => {
 					//console.log(response)
 					this.item = response.data.item
 					this.tags = response.data.tags
@@ -313,8 +306,12 @@
 					})
 				})
 			},
-			onSubmit: function () {
-				//const that = this;
+			onSubmit: function (toList = null) {
+			  this.loading1 = true;
+				const that = this;
+				this.$refs.form.validate().then(success=>{
+
+
 				let fd = new FormData();
 				//fd.append("files", this.$refs.files.files);
 
@@ -325,6 +322,7 @@
 				fd.append("title", this.item.title)
 				fd.append("slug", this.item.slug)
 				fd.append("description", this.item.description)
+				fd.append("status", this.item.status)
 				fd.append("tags", JSON.stringify(this.item.tags))
 				fd.append("addons", JSON.stringify(this.addons))
 
@@ -347,19 +345,23 @@
 					}
 				}
 
-				//const that = this;
-				console.log('submitted')
-				this.$axios.post(this.globalConstants.apiUrl + 'item/save', fd, headers).then((response) => {
-					console.log(response)
-					//this.item = response.data
-				})
-				.catch((error) => {
-					console.log(error)
-					this.$q.notify({
-						type: 'negative',
-						message: error.message
-					})
-				})
+          this.$axios.post(this.globalConstants.apiUrl + 'item/save', fd, headers).then((response) => {
+            let slug = response.data.item.slug
+            //this.item = response.data
+            if(toList===true){
+              this.$router.push({name:'items' })
+            }else{
+              this.$router.push({name:'item', params:{id: slug} })
+            }
+          })
+          .catch((error) => {
+            console.log(error)
+            this.$q.notify({
+              type: 'negative',
+              message: error.message
+            })
+          })
+        })
 			}
 		}
 	}
