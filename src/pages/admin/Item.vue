@@ -307,10 +307,9 @@
 				})
 			},
 			onSubmit: function (toList = null) {
-			  this.loading1 = true;
-				const that = this;
+			  this.loading1 = true
+				const that = this
 				this.$refs.form.validate().then(success=>{
-
 
 				let fd = new FormData();
 				//fd.append("files", this.$refs.files.files);
@@ -323,8 +322,10 @@
 				fd.append("slug", this.item.slug)
 				fd.append("description", this.item.description)
 				fd.append("status", this.item.status)
-				fd.append("tags", JSON.stringify(this.item.tags))
-				fd.append("addons", JSON.stringify(this.addons))
+
+        if(this.item.tags !== undefined) fd.append("tags", JSON.stringify(this.item.tags))
+        if(this.addons !== undefined) fd.append("addons", JSON.stringify(this.addons))
+
 
 				for( var i = 0; i < this.$refs.files.files.length; i++ ){
 					let file = this.$refs.files.files[i]
