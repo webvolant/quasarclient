@@ -19,7 +19,8 @@
             </q-item-section>
 
             <q-item-section>
-              <input v-model="addons[file.name]" label="Description" width="100%"/>
+              <label></label>
+              <input v-model="addons[file.name]" placeholder="" width="100%"/>
             </q-item-section>
 
             <q-item-section>
@@ -38,17 +39,17 @@
                     {{ file.name }}
                   </q-item-label>
 
-                  <q-item-label caption>
+                  <!--<q-item-label caption>
                     Status: {{ file.__status }}
                   </q-item-label>
 
                   <q-item-label caption>
                     {{ file.__sizeLabel }} / {{ file.__progressLabel }}
-                  </q-item-label>
+                  </q-item-label>-->
                 </q-item-section>
 
                 <q-item-section>
-                  <input v-model="addons[file.name]" label="Description" width="100%"/>
+                  <input v-model="addons[file.name]" placeholder="Пример: Глава 1, Петсон идет в поход" width="100%"/>
                 </q-item-section>
 
                 <!--<q-item-section
@@ -352,8 +353,10 @@
             if(toList===true){
               this.$router.push({name:'items' })
             }else{
-              this.$router.push({name:'item', params:{id: slug} })
+              //if(!this.editing) not all loadign after save in edit
+              this.$router.push({name:'item', params:{id: slug}, query: { time: Date.now() } })
             }
+            this.loading1 = false
           })
           .catch((error) => {
             console.log(error)
