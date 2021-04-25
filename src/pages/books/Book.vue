@@ -17,12 +17,14 @@
 	export default {
 		//name: 'PageItem',
 		components: { AudioPlayer },
-    meta () {
-      return {
-        title: this.item.meta_title,
-        description: this.item.meta_description,
-        keywords: this.item.meta_keywords, //{ name: 'keywords', content: 'Quasar website' },
-        equiv: { 'http-equiv': 'Content-Type', content: 'text/html; charset=UTF-8' },
+    meta: {
+		  title:'checking meta',
+      //return {
+      meta:{
+        //title: 'check',//this.item.meta_title,
+        //description: this.item.meta_description,
+        //keywords: this.item.meta_keywords, //{ name: 'keywords', content: 'Quasar website' },
+        //equiv: { 'http-equiv': 'Content-Type', content: 'text/html; charset=UTF-8' },
       }
     },
 		data () {
