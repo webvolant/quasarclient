@@ -16,9 +16,9 @@
 
 
               <q-card-section class="q-mb-md">
-                <div class="text-h6">{{ item.title }}</div>
+                <div class="text-h5">{{ item.title }}</div>
                 <!--<div class="text-subtitle2 q-mt-md">количество прослушиваний(рейтинг)</div>-->
-                <!--<span class="float-left text-h6">{{ item.author }}</span>-->
+                <span class="float-left text-h6" v-for="author in item.authors">{{ author.value }}</span>
                 <span class="float-right text-h6">{{ item.duration }}</span>
               </q-card-section>
 

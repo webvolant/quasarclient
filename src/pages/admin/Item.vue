@@ -9,6 +9,22 @@
         <!--//todo: 1. связанные с этим сказки , сезоны серии
             // 2. добавить порядок для файлов -->
 
+        <!--<q-toggle v-model="expandMeta" label="Meta" class="q-mb-md" />-->
+
+        <q-expansion-item v-model="expandMeta"
+          icon="search"
+          label="Meta"
+          caption="title, description, keywords"
+        >
+          <q-card>
+            <q-card-section>
+              <q-input filled dense v-model="item.meta_title" label="SEO заголовок"/>
+              <q-input filled dense v-model="item.meta_description" type="textarea" label="SEO описание"/>
+              <q-input filled dense v-model="item.meta_keywords" type="textarea" label="SEO ключевые слова"/>
+            </q-card-section>
+          </q-card>
+        </q-expansion-item>
+
         <q-list>
           <q-item v-for="file in item.files" :key="file.name">
 
@@ -20,15 +36,16 @@
 
             <q-item-section>
               <label></label>
-              <input v-model="addons[file.name]" placeholder="" width="100%"/>
+              <input v-model="addons[file.name]" placeholder="" width="100%" />
             </q-item-section>
 
             <q-item-section>
-              <q-btn class="gt-xs" size="12px" flat dense round icon="delete" @click="removeFile(file)"></q-btn>
+              <q-btn class="gt-xs" size="12px" dense @click="removeFile(file)"><q-icon name="delete" /></q-btn>
             </q-item-section>
 
           </q-item>
         </q-list>
+
         <q-uploader filled dense style="width: 98%" label="Файлы" multiple ref="files">
           <template v-slot:list="scope">
             <q-list separator>
@@ -61,16 +78,7 @@
                 </q-item-section>-->
 
                 <q-item-section top side>
-                  <q-btn
-                    class="gt-xs"
-                    size="12px"
-                    flat
-                    dense
-                    round
-                    icon="delete"
-                    @click="scope.removeFile(file); removeFile(file)"
-                  ></q-btn>
-
+                  <q-btn class="gt-xs" size="12px" flat dense round icon="delete" @click="scope.removeFile(file); removeFile(file)"></q-btn>
                 </q-item-section>
               </q-item>
 
@@ -78,20 +86,11 @@
           </template>
         </q-uploader>
 
-        <q-select
-          label="Теги, чтобы выделять похожие материалы"
-          filled
-          :options="tags"
-          v-model="item.tags"
-          use-input
-          use-chips
-          multiple
-          hide-dropdown-icon
-          input-debounce="0"
-          new-value-mode="add-unique"
-          style="width: 250px"
-          map-options
-        />
+        <!-- option-value="id"
+          option-label="value"
+          emit-value -->
+        <q-select map-options emit-value multiple new-value-mode="add-unique" filled v-model="item.authors" use-input use-chips fill-input input-debounce="0" :options="authors" hint="Автор" style="width: 250px; padding-bottom: 32px"/>
+        <q-select map-options label="Теги" filled :options="tags" v-model="item.tags" use-input use-chips multiple hide-dropdown-icon input-debounce="0" new-value-mode="add-unique" style="width: 250px" hint="Автор"/>
 
         <div>
           <q-btn :loading="loading1" label="Сохранить" @click="onSubmit()" color="primary"/>
@@ -123,6 +122,7 @@
 		//name: 'PageItem',
 		data () {
 			return {
+        expandMeta:false,
         loading1: false,
 				item:{
 				  status: 1,
@@ -135,6 +135,7 @@
 	        type: Array,
         },*/
         tags:[],
+        authors:[],
 				addons:{
 					type: Array,
 					//default: null
@@ -171,6 +172,7 @@
 			} else {
 				this.editing = false
 			}
+      this.expandMeta = !this.editing
 		},
 		methods: {
 			testing: function(){
@@ -271,6 +273,7 @@
 					//console.log(response)
 					this.item = response.data.item
 					this.tags = response.data.tags
+					this.authors = response.data.authors
 
 					that.$refs.formFields = []
 
@@ -323,8 +326,12 @@
 				fd.append("slug", this.item.slug)
 				fd.append("description", this.item.description)
 				fd.append("status", this.item.status)
+				fd.append("meta_keywords", this.item.meta_keywords)
+				fd.append("meta_title", this.item.meta_title)
+				fd.append("meta_description", this.item.meta_description)
 
         if(this.item.tags !== undefined) fd.append("tags", JSON.stringify(this.item.tags))
+        if(this.item.authors !== undefined) fd.append("authors", JSON.stringify(this.item.authors))
         if(this.addons !== undefined) fd.append("addons", JSON.stringify(this.addons))
 
 

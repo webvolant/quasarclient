@@ -1,9 +1,12 @@
 <template>
-  <q-page class="">
-    <div class="q-pa-md"> <!-- style="display: none;" preload="auto" -->
-      <audio-player :files="files" v-if="files.length>0 && item.status==1"></audio-player>
-      <div color="primary" v-if="item.status == 3">
-        Приносим свои извинения. Доступ к файлам временно закрыт!
+  <q-page class="q-pa-md">
+    <div class="row">
+      <div class="col-md-6 col-sm-6"> <!-- style="display: none;" preload="auto" -->
+        <q-img v-if="images.length>0" :src="images[0].path" style="height: 400px"/>
+        <audio-player :files="files" v-if="files.length>0 && item.status==1"></audio-player>
+        <div color="primary" v-if="item.status == 3">
+          Приносим свои извинения. Доступ к файлам временно закрыт!
+        </div>
       </div>
     </div>
   </q-page>
@@ -14,6 +17,14 @@
 	export default {
 		//name: 'PageItem',
 		components: { AudioPlayer },
+    meta () {
+      return {
+        title: this.item.meta_title,
+        description: this.item.meta_description,
+        keywords: this.item.meta_keywords, //{ name: 'keywords', content: 'Quasar website' },
+        equiv: { 'http-equiv': 'Content-Type', content: 'text/html; charset=UTF-8' },
+      }
+    },
 		data () {
 			return {
 			  item:{},
@@ -24,6 +35,8 @@
 					//{path:'audio/patrul-3.mp3', name:'Щенки спасают лес3'},
 					//{path:'audio/patrul-4.mp3', name:'Щенки спасают лес4'},
 				],
+        images:[
+        ],
 			}
 		},
 		mounted(){
@@ -33,7 +46,7 @@
 			getItem: function () {
 				const that = this;
 				this.$axios.get(this.globalConstants.apiUrl + 'item/' + this.$route.params.id).then((response) => {
-					//console.log(response.data)
+					console.log(response.data)
 					that.item = response.data.item
           if(that.item.files)
           that.item.files.forEach(function (value, index) {
@@ -41,6 +54,12 @@
 							value.path = that.globalConstants.imageUrl + value.path
 							that.files.push(value)
 						}
+
+            if(value.type==2){
+              value.path = that.globalConstants.imageUrl + value.path
+              that.images.push(value)
+            }
+
 					})
 					/*this.item.files.forEach(function (value, index) {
 						console.log(value)
