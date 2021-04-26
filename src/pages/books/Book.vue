@@ -17,8 +17,13 @@
 	export default {
 		//name: 'PageItem',
 		components: { AudioPlayer },
-    meta: {
-		  title:'checking meta',
+    meta(){
+		  return {
+		    title: this.item.meta_title
+      }
+    },
+    /*meta: {
+		  title:this.item.meta_title,
       //return {
       meta:{
         //title: 'check',//this.item.meta_title,
@@ -26,9 +31,10 @@
         //keywords: this.item.meta_keywords, //{ name: 'keywords', content: 'Quasar website' },
         //equiv: { 'http-equiv': 'Content-Type', content: 'text/html; charset=UTF-8' },
       }
-    },
+    },*/
 		data () {
 			return {
+        meta_title:null,
 			  item:{},
 				files:[
 					///{path:'audio/patrul-0.mp3', name:'Щенки спасают лес'},
@@ -41,9 +47,28 @@
         ],
 			}
 		},
+    preFetch({store, currentRoute}){
+      /*const that = this;
+      $axios.get(this.globalConstants.apiUrl + 'item/' + currentRoute.params.id).then((response) => {
+        console.log(response.data)
+        //return store.dis
+
+      })
+        .catch((error) => {
+          console.log(error)
+          /*this.$q.notify({
+            type: 'negative',
+            message: error.message
+          })*/
+          //this.$q.notify({color: 'negative',position: 'top',message: 'Loading failed',icon: 'report_problem'})
+        //})
+    },
 		mounted(){
-			this.getItem();
+      this.getItem();
 		},
+    /*computed:{
+      meta_item: this.item.meta_title
+    },*/
 		methods: {
 			getItem: function () {
 				const that = this;
