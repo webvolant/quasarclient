@@ -49,7 +49,10 @@ export default {
     }
   },
   mounted(){
-  
+   window.addEventListener('beforeinstallpromt', (e)=> {
+	deferredPromt = e;
+	//this.showAppInstallBanner = true;
+	})  
  }
 }
 </script>
