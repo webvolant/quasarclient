@@ -47,6 +47,9 @@ export default {
     return {
       leftDrawerOpen: false,
     }
-  }
+  },
+  mounted(){
+  
+ }
 }
 </script>

@@ -8,8 +8,8 @@ Vue.use(VueRouter)
 Vue.prototype.globalConstants = {
   //baseUrl: {
     //website: 'https://my.fancy.website.example.com',
-    apiUrl: 'http://aapi.webeskadra.com/public/index.php/api/',
-    imageUrl: 'http://aapi.webeskadra.com/public'
+    apiUrl: 'https://webeskadra.ru/public/index.php/api/',
+    imageUrl: 'https://webeskadra.ru/public'
   //}
 }
 
