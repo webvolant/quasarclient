@@ -37,6 +37,7 @@
             <q-item-section>
               <label></label>
               <input v-model="addons[file.name]" placeholder="" width="100%" />
+              <input v-model="positions[file.name]" placeholder="" width="100%" />
             </q-item-section>
 
             <q-item-section>
@@ -140,6 +141,10 @@
 					type: Array,
 					//default: null
 				},
+        positions:{
+          type: Array,
+          //default: null
+        },
         status:[
           {
             label: 'Opened',
@@ -280,6 +285,7 @@
 					this.item.files.forEach(function (value, index) {
 						//console.log(value)
 						that.addons[value.name] = value.title;
+            that.positions[value.name] = value.position;
 					})
 
 
@@ -333,6 +339,7 @@
         if(this.item.tags !== undefined) fd.append("tags", JSON.stringify(this.item.tags))
         if(this.item.authors !== undefined) fd.append("authors", JSON.stringify(this.item.authors))
         if(this.addons !== undefined) fd.append("addons", JSON.stringify(this.addons))
+        if(this.positions !== undefined) fd.append("positions", JSON.stringify(this.positions))
 
 
 				for( var i = 0; i < this.$refs.files.files.length; i++ ){

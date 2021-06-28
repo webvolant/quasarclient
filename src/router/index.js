@@ -2,6 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 import routes from './routes'
+import axios from "axios"
+
 
 Vue.use(VueRouter)
 
@@ -14,7 +16,21 @@ Vue.prototype.globalConstants = {
 }
 
 //Vue.config.globalProperties.$appName = 'My App'
+//export default ({ Vue, router }) => { // <-------- This is where the `router` comes from
+  Vue.prototype.$axios = axios;
 
+/*axios.interceptors.request.use((config) => {
+  console.log('request anton')
+  console.log(document.cookie, config.headers.Cookie); //undefined
+});*/
+
+  axios.interceptors.response.use((res)=>{
+    console.log('anton')
+    console.log(res)
+    //console.log(res.headers['set-cookie']);  //undefined
+    return res;
+  });
+//}
 /*
  * If not building with SSR mode, you can
  * directly export the Router instantiation;

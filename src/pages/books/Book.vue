@@ -14,6 +14,7 @@
 
 <script>
 	import AudioPlayer from 'components/AudioPlayer.vue'
+  import axios from "axios";
 	export default {
 		//name: 'PageItem',
 		components: { AudioPlayer },
@@ -72,7 +73,7 @@
 		methods: {
 			getItem: function () {
 				const that = this;
-				this.$axios.get(this.globalConstants.apiUrl + 'item/' + this.$route.params.id).then((response) => {
+				this.$axios.get(this.globalConstants.apiUrl + 'item/' + this.$route.params.id, {withCredentials: true}).then((response) => {
 					console.log(response.data)
 					that.item = response.data.item
           if(that.item.files)
