@@ -25,8 +25,8 @@ Vue.prototype.globalConstants = {
 });*/
 
   axios.interceptors.response.use((res)=>{
-    console.log('anton')
-    console.log(res)
+    console.log('interceptor of response')
+    //console.log(res)
     //console.log(res.headers['set-cookie']);  //undefined
     return res;
   });

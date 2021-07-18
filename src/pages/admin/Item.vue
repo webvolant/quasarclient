@@ -4,7 +4,11 @@
       <q-form class="q-gutter-md" ref="form">
         <q-input filled dense v-model="item.title" label="Название" hint="" lazy-rules :rules="[ val => val && val.length > 0 || 'Обязательное поле']"/>
         <q-input filled dense v-model="item.slug" label="Ссылка" hint="" lazy-rules :rules="[ val => val && val.length > 0 || 'Обязательное поле']"/>
-        <q-input filled dense v-model="item.description" type="textarea" label="Текст описания"/>
+        <q-editor filled dense v-model="item.description" label="Текст описания"
+                  :toolbar="[
+        ['undo', 'redo'],
+        ['viewsource']
+      ]" />
         <q-select filled dense v-model="item.status" :options="status" label="Статус" emit-value map-options/>
         <!--//todo: 1. связанные с этим сказки , сезоны серии
             // 2. добавить порядок для файлов -->
@@ -332,9 +336,9 @@
 				fd.append("slug", this.item.slug)
 				fd.append("description", this.item.description)
 				fd.append("status", this.item.status)
-				fd.append("meta_keywords", this.item.meta_keywords)
-				fd.append("meta_title", this.item.meta_title)
-				fd.append("meta_description", this.item.meta_description)
+				if(this.item.meta_keywords!==undefined) fd.append("meta_keywords", this.item.meta_keywords)
+        if(this.item.meta_title!==undefined) fd.append("meta_title", this.item.meta_title)
+        if(this.item.meta_description!==undefined) fd.append("meta_description", this.item.meta_description)
 
         if(this.item.tags !== undefined) fd.append("tags", JSON.stringify(this.item.tags))
         if(this.item.authors !== undefined) fd.append("authors", JSON.stringify(this.item.authors))

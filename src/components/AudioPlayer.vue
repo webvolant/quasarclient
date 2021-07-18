@@ -54,7 +54,10 @@
 		props: {
 			files: {
 				type: Array
-			}
+			},
+      item: {
+        type: Object
+      }
 		},
 		data () {
 			return {
@@ -170,6 +173,14 @@
 			play: function () {
 				//this.playing = true
 				this.$refs.audio.play()
+
+        this.$axios.post(this.globalConstants.apiUrl + 'countPlay', this.item, {withCredentials: true}).then((response) => {
+          console.log(response)
+        }).catch((e) => {
+            console.log(e)
+            //this.$q.notify({color: 'negative',position: 'top',message: 'Loading failed',icon: 'report_problem'})
+        })
+
 			},
 			pause: function () {
 				//this.playing = false

@@ -1,9 +1,11 @@
 <template>
   <q-page class="q-pa-md">
     <div class="row">
+      <div class="col-12"><h3>{{item.title}}</h3></div>
+      <div class="col-12"><i class="fas fa-2x fa-play"></i><span class="text-h4">  {{item.views}}</span></div>
       <div class="col-md-6 col-sm-6"> <!-- style="display: none;" preload="auto" -->
         <q-img v-if="images.length>0" :src="images[0].path" style="height: 400px"/>
-        <audio-player :files="files" v-if="files.length>0 && item.status==1"></audio-player>
+        <audio-player :item="item" :files="files" v-if="files.length>0 && item.status==1"></audio-player>
         <div color="primary" v-if="item.status == 3">
           Приносим свои извинения. Доступ к файлам временно закрыт!
         </div>
