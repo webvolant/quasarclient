@@ -3,11 +3,16 @@
     <div class="q-pa-md"> <!-- style="display: none;" preload="auto" -->
 
       <div class="row q-col-gutter-x-lg q-col-gutter-y-md">
-        <div class="col-12 col-sm-6 col-md-3" v-for="(item, index) in items">
-          <router-link :to="{name: 'book', params: { id: item.slug } }" custom v-slot="{ navigate }">
+        <div class="col-12 col-sm-6 col-md-3" v-for="(item, index) in items">	
+          <!--<router-link tag="a" :to="{name: 'book', params: { id: item.slug } }" custom v-slot="{ navigate }">-->
             <q-card class="my-card cursor-pointer q-hoverable" v-ripple clickable @click="navigate"> <!--@click="$router.replace('/book/')"-->
               <!--<router-link :to="{name: 'book', params: { id: item.id } }">Перейти</router-link>-->
-              <q-img :src="globalConstants.imageUrl + item.files[0].path" v-if="item.files.length>0" style="height: 300px"/>
+<router-link :to="{name: 'book', params: { id: item.slug } }" class="text-h6 text-primary">
+<q-img :src="globalConstants.imageUrl + item.files[0].path" v-if="item.files.length>0" style="height: 300px"/>
+
+</router-link>              
+
+
               <!--:ratio="1" sizes="(max-width: 400px) 400w,
               (min-width: 400px) and (max-width: 800px) 800w,
               (min-width: 800px) and (max-width: 1200px) 1200w,
@@ -16,7 +21,9 @@
 
 
               <q-card-section class="q-mb-md">
-                <div class="text-h6 text-primary">{{ item.title }}</div>
+		 <router-link :to="{name: 'book', params: { id: item.slug } }" class="text-h6 text-primary">{{ item.title }}</router-link>
+
+                
                 <!--<div class="text-subtitle2 q-mt-md">количество прослушиваний(рейтинг)</div>-->
                 <span class="float-left text-h6 text-dark" v-for="author in item.authors">{{ author.value }}</span>
                 <span class="float-left text-h6 text-dark"><i class="fas fa-heart text-accent" v-if="item.views"></i> {{ item.views }}</span><br/>
@@ -26,7 +33,7 @@
               <q-card-section class="q-pt-none">
               </q-card-section>
             </q-card>
-          </router-link>
+	<!--          </router-link>-->
           <!---->
 
 
