@@ -334,16 +334,17 @@
 
 				fd.append("title", this.item.title)
 				fd.append("slug", this.item.slug)
-				fd.append("description", this.item.description)
+        if(this.item.description!=='') fd.append("description", this.item.description)
 				fd.append("status", this.item.status)
-				if(this.item.meta_keywords!==undefined) fd.append("meta_keywords", this.item.meta_keywords)
-        if(this.item.meta_title!==undefined) fd.append("meta_title", this.item.meta_title)
-        if(this.item.meta_description!==undefined) fd.append("meta_description", this.item.meta_description)
+          //console.log(this.item.meta_keywords)
+				if(this.item.meta_keywords!=='') fd.append("meta_keywords", this.item.meta_keywords)
+        if(this.item.meta_title!=='') fd.append("meta_title", this.item.meta_title)
+        if(this.item.meta_description!=='') fd.append("meta_description", this.item.meta_description)
 
-        if(this.item.tags !== undefined) fd.append("tags", JSON.stringify(this.item.tags))
-        if(this.item.authors !== undefined) fd.append("authors", JSON.stringify(this.item.authors))
-        if(this.addons !== undefined) fd.append("addons", JSON.stringify(this.addons))
-        if(this.positions !== undefined) fd.append("positions", JSON.stringify(this.positions))
+        fd.append("tags", JSON.stringify(this.item.tags))
+        fd.append("authors", JSON.stringify(this.item.authors))
+        fd.append("addons", JSON.stringify(this.addons))
+        fd.append("positions", JSON.stringify(this.positions))
 
 
 				for( var i = 0; i < this.$refs.files.files.length; i++ ){
