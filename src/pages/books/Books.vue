@@ -16,10 +16,11 @@
 
 
               <q-card-section class="q-mb-md">
-                <div class="text-h5">{{ item.title }}</div>
+                <div class="text-h6 text-primary">{{ item.title }}</div>
                 <!--<div class="text-subtitle2 q-mt-md">количество прослушиваний(рейтинг)</div>-->
-                <span class="float-left text-h6" v-for="author in item.authors">{{ author.value }}</span>
-                <span class="float-right text-h6">{{ item.duration }}</span>
+                <span class="float-left text-h6 text-dark" v-for="author in item.authors">{{ author.value }}</span>
+                <span class="float-left text-h6 text-dark"><i class="fas fa-heart text-accent" v-if="item.views"></i> {{ item.views }}</span><br/>
+                <span class="float-right text-dark" style="font-size: 16px;">{{ item.duration }}</span>
               </q-card-section>
 
               <q-card-section class="q-pt-none">

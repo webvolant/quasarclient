@@ -1,14 +1,21 @@
 <template>
-  <q-page class="q-pa-md">
-    <div class="row">
-      <div class="col-12"><h3>{{item.title}}</h3></div>
-      <div class="col-12"><i class="fas fa-2x fa-play"></i><span class="text-h4">  {{item.views}}</span></div>
+  <q-page class="q-pa-md" style="background:#f4f4f4;">
+    <div class="row q-col-gutter-md">
+      <div class="col-12"><h1 class="text-accent">{{item.title}}</h1></div>
+      <div class="col-12">
+        <i class="fas fa-heart text-accent"></i><span class="text-h6">  {{item.views}}</span>
+        <span class="float-right">{{item.duration}}</span>
+      </div>
       <div class="col-md-6 col-sm-6"> <!-- style="display: none;" preload="auto" -->
-        <q-img v-if="images.length>0" :src="images[0].path" style="height: 400px"/>
+        <p v-if="item.meta_description">{{item.meta_description}}</p>
         <audio-player :item="item" :files="files" v-if="files.length>0 && item.status==1"></audio-player>
         <div color="primary" v-if="item.status == 3">
           Приносим свои извинения. Доступ к файлам временно закрыт!
         </div>
+      </div>
+      <div class="col-md-6 col-sm-6 q-gutter-y-lg"> <!-- style="display: none;" preload="auto" -->
+        <q-img v-if="images.length>0" :src="images[0].path" style="height: 400px"/>
+        <div class="">{{item.description}}</div>
       </div>
     </div>
   </q-page>

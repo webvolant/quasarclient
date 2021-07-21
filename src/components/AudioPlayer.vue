@@ -1,5 +1,6 @@
 <template>
-    <div class=""> <!-- style="display: none;" preload="auto" -->
+    <div class="q-col-gutter-xs" style="background: white;
+    padding: 0 8px;"> <!-- style="display: none;" preload="auto" -->
 
 
       <div class="row">
@@ -22,8 +23,8 @@
         </div>
         <div class="col-auto col-md-auto">
           <q-btn flat color="primary" @click="prev()" icon="fas fa-angle-double-left" />
-          <q-btn round size="lg" style="background: #FF0080; color: white" @click="play()" v-if="!playing" icon="fas fa-play" />
-          <q-btn round size="lg" color="primary" @click="pause()" v-if="playing" icon="fas fa-pause" />
+          <q-btn round size="lg" color="accent" @click="play()" v-if="!playing" icon="fas fa-play" />
+          <q-btn round size="lg" color="accent" @click="pause()" v-if="playing" icon="fas fa-pause" />
           <q-btn flat color="primary" @click="next()" icon="fas fa-angle-double-right" />
         </div>
         <div class="col">
@@ -33,8 +34,8 @@
 
       <div class="row" style="margin-top: 15px">
         <div class="col">
-          <q-list bordered separator style="background: #fdfdfd;">
-            <q-item clickable v-ripple v-for="(item, index) in files" :active="file.path === item.path" @click="changeTrack(item)" active-class="text-orange">
+          <q-list separator style="">
+            <q-item clickable v-ripple v-for="(item, index) in files" :active="file.path === item.path" @click="changeTrack(item)" active-class="text-accent">
               <q-item-label class="text-bold text-h6" style="">{{ item.title }}</q-item-label>
             </q-item>
           </q-list>
