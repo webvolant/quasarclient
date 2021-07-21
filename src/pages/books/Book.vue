@@ -15,7 +15,7 @@
       </div>
       <div class="col-md-6 col-sm-6 q-gutter-y-lg"> <!-- style="display: none;" preload="auto" -->
         <q-img v-if="images.length>0" :src="images[0].path" style="height: 400px"/>
-        <div class="">{{item.description}}</div>
+        <div class="" v-html="item.description"></div>
       </div>
     </div>
   </q-page>
