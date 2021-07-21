@@ -4,7 +4,7 @@
 
       <div class="row">
         <div class="col">
-          <q-table title="Items" dense :data="data" :columns="columns" row-key="name">
+          <q-table title="Items" dense :data="data" :columns="columns" row-key="name" :pagination="paginationInit">
             <template v-slot:body-cell-title="props">
               <q-td :props="props">
                 <router-link :to="{name: 'item', params: { id: props.row.slug } }">{{ props.row.title }}</router-link>
@@ -33,6 +33,9 @@
 					{ name: 'title', label: 'Title', field: 'title', align: 'left'},
 					{ name: 'slug', label: 'Slug', field: 'slug', align: 'left'},
 				],
+        paginationInit:{
+          rowsPerPage:50,
+        }
 			}
 		},
 		created(){
