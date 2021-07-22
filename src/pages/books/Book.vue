@@ -1,16 +1,27 @@
 <template>
-  <q-page class="q-pa-md" style="background:#f4f4f4;">
+  <q-page class="q-pa-md background">
     <div class="row q-col-gutter-md">
       <div class="col-12"><h1 class="text-accent">{{item.title}}</h1></div>
       <div class="col-12">
-        <i class="fas fa-heart text-accent"></i><span class="text-h6">  {{item.views}}</span>
-        <span class="float-right">{{item.duration}}</span>
+        <span class="float-left"><i class="fas fa-heart text-accent"></i><span class="text-h6">  {{item.views}}</span></span>
       </div>
+
       <div class="col-md-6 col-sm-6"> <!-- style="display: none;" preload="auto" -->
-        <p v-if="item.meta_description">{{item.meta_description}}</p>
-        <audio-player :item="item" :files="files" v-if="files.length>0 && item.status==1"></audio-player>
-        <div color="primary" v-if="item.status == 3">
-          Приносим свои извинения. Доступ к файлам временно закрыт!
+        <div class="row q-col-gutter-md">
+          <div class="col-12">
+            <p v-if="item.meta_description">{{item.meta_description}}</p>
+          </div>
+          <div class="col-12">
+            <div class="float-left text-primary text-h6" v-for="author in item.authors" style="margin-left: 10px;">{{ author.value }}</div>
+            <div class="float-right">{{item.duration}}</div>
+          </div>
+
+        <div class="col-12">
+          <audio-player :item="item" :files="files" v-if="files.length>0 && item.status==1"></audio-player>
+          <div color="primary" v-if="item.status == 3">
+            Приносим свои извинения. Доступ к файлам временно закрыт!
+          </div>
+        </div>
         </div>
       </div>
       <div class="col-md-6 col-sm-6 q-gutter-y-lg"> <!-- style="display: none;" preload="auto" -->

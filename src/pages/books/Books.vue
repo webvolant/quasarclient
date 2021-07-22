@@ -1,16 +1,16 @@
 <template>
-  <q-page class="">
+  <q-page class="background">
     <div class="q-pa-md"> <!-- style="display: none;" preload="auto" -->
 
       <div class="row q-col-gutter-x-lg q-col-gutter-y-md">
-        <div class="col-12 col-sm-6 col-md-3" v-for="(item, index) in items">	
+        <div class="col-12 col-sm-6 col-md-3" v-for="(item, index) in items">
           <!--<router-link tag="a" :to="{name: 'book', params: { id: item.slug } }" custom v-slot="{ navigate }">-->
-            <q-card class="my-card cursor-pointer q-hoverable" v-ripple clickable @click="navigate"> <!--@click="$router.replace('/book/')"-->
+            <q-card class="my-card" v-ripple clickable @click="navigate"> <!--@click="$router.replace('/book/')"-->
               <!--<router-link :to="{name: 'book', params: { id: item.id } }">Перейти</router-link>-->
 <router-link :to="{name: 'book', params: { id: item.slug } }" class="text-h6 text-primary">
-<q-img :src="globalConstants.imageUrl + item.files[0].path" v-if="item.files.length>0" style="height: 300px"/>
+<q-img :src="globalConstants.imageUrl + item.files[0].path" v-if="item.files.length>0" style="height: 250px"/>
 
-</router-link>              
+</router-link>
 
 
               <!--:ratio="1" sizes="(max-width: 400px) 400w,
@@ -21,12 +21,11 @@
 
 
               <q-card-section class="q-mb-md">
-		 <router-link :to="{name: 'book', params: { id: item.slug } }" class="text-h6 text-primary">{{ item.title }}</router-link>
-
-                
+		            <router-link :to="{name: 'book', params: { id: item.slug } }" class="text-h6 text-primary">{{ item.title }}</router-link>
+                <br/>
                 <!--<div class="text-subtitle2 q-mt-md">количество прослушиваний(рейтинг)</div>-->
-                <span class="float-left text-h6 text-dark" v-for="author in item.authors">{{ author.value }}</span>
-                <span class="float-left text-h6 text-dark"><i class="fas fa-heart text-accent" v-if="item.views"></i> {{ item.views }}</span><br/>
+                <div class="text-h6 text-dark"><i class="fas fa-heart text-accent" v-if="item.views"></i> {{ item.views }}</div>
+                <span class="float-left text-dark" v-for="author in item.authors">{{ author.value }}</span>
                 <span class="float-right text-dark" style="font-size: 16px;">{{ item.duration }}</span>
               </q-card-section>
 
