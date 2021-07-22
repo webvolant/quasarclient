@@ -51,6 +51,11 @@
 <script>
 	export default {
 		//name: 'PageItem',
+    meta(){
+      return {
+        title: 'Audioskazki online'
+      }
+    },
 		data () {
 			return {
 				items:[
